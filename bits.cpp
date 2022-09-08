@@ -3,7 +3,7 @@
 //только с чётными номерами
 //128
 //128
-//обнулить бит в 1/0 используя маску 1 вариант
+//обнулить бит в 0 используя маску 1 вариант
 #include <iostream>
 using namespace std;
 
@@ -77,7 +77,7 @@ int main()
 {
     while (true)
     {
-        cout << "Choose task (1-6) (or exit):\n 1.set 1 at 7, 9 and 11 bits\n 2.set 0 at even numbers\n 3.Multiply numbers\n4.Divide numbers\n5.Set to 0 bits\n6.Exit\n";
+        cout << "Choose task (1-6) (or exit):\n1.set 1 at 7, 9 and 11 bits\n2.set 0 at even numbers\n3.Multiply numbers\n4.Divide numbers\n5.Set to 0 bits\n6.Exit\n";
         char t;
         cin >> t;
         switch (t)
