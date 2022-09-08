@@ -9,6 +9,8 @@ using namespace std;
 
 void cout_result(unsigned short bit)
 {
+    cout << "Result is: \ndec     hex     bits\n";
+    cout << dec << bit << "     " << hex << bit << "     ";
     unsigned short mask = 0b1000000000000000;
     string output = "";
     for (int i = 0; i < 16; i++)
@@ -26,7 +28,6 @@ void task1()
     unsigned short s = 0x0000;
     unsigned short mask = 0b0000101010000000;
     s = s | mask;
-    cout << s << "     ";
     cout_result(s);
 }
 void task2()
@@ -36,7 +37,6 @@ void task2()
     cin >> hex >> s;
     unsigned short mask = 0b1010101010101010;
     s = s & mask;
-    cout << s << "     ";
     cout_result(s);
 }
 void task3()
@@ -46,7 +46,6 @@ void task3()
     cin >> hex >> s;
     unsigned short mask = 7;
     s <<= mask;
-    cout << s << "     ";
     cout_result(s);
 }
 void task4()
@@ -56,7 +55,6 @@ void task4()
     cin >> hex >> s;
     unsigned short mask = 7;
     s >>= mask;
-    cout << s << "     ";
     cout_result(s);
 }
 void task5()
@@ -72,7 +70,6 @@ void task5()
     //s = s | mask; //чтобы в 1
     mask = ~mask;
     s = s & mask; //чтобы в 0
-    cout << s << "     ";
     cout_result(s);
 }
 
