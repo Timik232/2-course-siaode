@@ -6,65 +6,48 @@
 #include <iostream>
 using namespace std;
 
-void cout_result(unsigned short bit)
+string to_bit(unsigned short bit)
 {
-    cout << "Result is: \ndec     hex     bits\n";
-    cout << dec << bit << "     " << hex << bit << "     ";
-    unsigned short mask = 0b1000000000000000;
     string output = "";
+    unsigned short mask = 0b1000000000000000;
     for (int i = 0; i < 16; i++)
     {
+        
         if (mask & bit)
             output += "1";
         else output += "0";
         mask >>= 1;
 
     }
+    return output;
+}
+
+void cout_result(unsigned short bit)
+{
+    cout << "Result is: \ndec     hex     bits\n";
+    cout << dec << bit << "     " << hex << bit << "     ";
+    string output = to_bit(bit);
     cout << output << endl;
 }
-unsigned short task1()
+
+unsigned short task1(unsigned short s, unsigned short mask)
 {
-    unsigned short s = 0x0000;
-    unsigned short mask = 0b0000101010000000;
-    s = s | mask;
-    return s;
+    return s | mask;
 }
-unsigned short task2()
+unsigned short task2(unsigned short s, unsigned short mask)
 {
-    cout << "Enter hex-number\n";
-    unsigned short s;
-    cin >> hex >> s;
-    unsigned short mask = 0b1010101010101010;
-    s = s & mask;
-    return s;
+    return s & mask;
 }
-unsigned short task3()
+unsigned short task3(unsigned short s, unsigned short mask)
 {
-    unsigned short s;
-    cout << "Enter hex-number\n";
-    cin >> hex >> s;
-    unsigned short mask = 7;
-    s <<= mask;
-    return s;
+    return s <<= mask;
 }
-unsigned short task4()
+unsigned short task4(unsigned short s, unsigned short mask)
 {
-    unsigned short s;
-    cout << "Enter hex-number\n";
-    cin >> hex >> s;
-    unsigned short mask = 7;
-    s >>= mask;
-    return s;
+    return s >>= mask;
 }
-unsigned short task5()
+unsigned short task5(unsigned short &s, unsigned short &mask, unsigned short n)
 {
-    unsigned short s;
-    cout << "Enter hex-number\n";
-    cin >> hex >> s;
-    unsigned short mask = 0b0000000000000001;
-    cout << "Enter n: this bit will be 0\n";
-    unsigned short n;
-    cin >> n;
     mask <<= n;
     //s = s | mask; //чтобы в 1
     mask = ~mask;
@@ -79,22 +62,66 @@ int main()
         cout << "Choose task (1-6) (or exit):\n1.set 1 at 7, 9 and 11 bits\n2.set 0 at even numbers\n3.Multiply numbers\n4.Divide numbers\n5.Set to 0 bits\n6.Exit\n";
         char t;
         cin >> t;
+        unsigned short s;
+        unsigned short mask;
         switch (t)
         {
         case '1':
-            cout_result(task1());
+            s = 0x0000;
+            cout << "Original number: " << hex << s << endl;
+            mask = 0b0000101010000000;
+            cout << "Mask: " << to_bit(mask) << endl;
+            s = task1(s, mask);
+            
+            cout_result(s);
+            cout << endl;
             break;
         case '2':
-            cout_result(task2());
+            cout << "Enter number\n";
+            cin >> s;
+            cout << "Original number: " << dec << s << endl;
+            mask = 0b1010101010101010;
+            s = task2(s, mask);
+            cout << "Mask: " << to_bit(mask) << endl;
+            cout_result(s);
+            cout << endl;
             break;
         case '3':
-            cout_result(task3());
+            cout << "Enter number\n";
+            cin >> s;
+            cout << "Original number: " << dec << s << endl;
+            mask = 7;
+            s = task3(s, mask);
+            cout << "Mask: " << to_bit(mask) << endl;
+            cout_result(s);
+            cout << endl;
             break;
         case '4':
-            cout_result(task4());
+            cout << "Enter number\n";
+            cin >> s;
+            cout << "Original number: " << dec << s << endl;
+            mask = 7;
+            s = task4(s, mask);
+            cout << "Mask: " << to_bit(mask) << endl;
+            cout_result(s);
+            cout << endl;
             break;
         case '5':
-            cout_result(task5());
+            cout << "Enter number\n";
+            cin >> s;
+            
+            mask = 0b0000000000000001;
+            
+            cout << "Enter n: this bit will be 0\n";
+            unsigned short n;
+            cin >> n;
+            cout << "bit is " << n << endl;
+            cout << "Original number: " << dec << s << endl;
+            cout << "Mask in beginning: " << to_bit(mask) << endl;
+            s = task5(s, mask, n);
+            cout << "Mask in the end: " << to_bit(mask) << endl;
+            cout_result(s);
+            cout << endl;
             break;
         case '6':
             exit(0);
