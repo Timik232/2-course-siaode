@@ -1,4 +1,3 @@
-
 //7 9 11
 //только с чётными номерами
 //128
@@ -28,7 +27,7 @@ void task1()
     unsigned short s = 0x0000;
     unsigned short mask = 0b0000101010000000;
     s = s | mask;
-    cout_result(s);
+    return s;
 }
 void task2()
 {
@@ -37,7 +36,7 @@ void task2()
     cin >> hex >> s;
     unsigned short mask = 0b1010101010101010;
     s = s & mask;
-    cout_result(s);
+    return s;
 }
 void task3()
 {
@@ -46,7 +45,7 @@ void task3()
     cin >> hex >> s;
     unsigned short mask = 7;
     s <<= mask;
-    cout_result(s);
+    return s;
 }
 void task4()
 {
@@ -55,7 +54,7 @@ void task4()
     cin >> hex >> s;
     unsigned short mask = 7;
     s >>= mask;
-    cout_result(s);
+    return s;
 }
 void task5()
 {
@@ -70,7 +69,7 @@ void task5()
     //s = s | mask; //чтобы в 1
     mask = ~mask;
     s = s & mask; //чтобы в 0
-    cout_result(s);
+    return s;
 }
 
 int main()
@@ -83,19 +82,19 @@ int main()
         switch (t)
         {
         case '1':
-            task1();
+            cout_result(task1())
             break;
         case '2':
-            task2();
+            cout_result(task2());
             break;
         case '3':
-            task3();
+            cout_result(task3());
             break;
         case '4':
-            task4();
+            cout_result(task4());
             break;
         case '5':
-            task5();
+            cout_result(task5());
             break;
         case '6':
             exit(0);
