@@ -22,14 +22,14 @@ void cout_result(unsigned short bit)
     }
     cout << output << endl;
 }
-void task1()
+unsigned short task1()
 {
     unsigned short s = 0x0000;
     unsigned short mask = 0b0000101010000000;
     s = s | mask;
     return s;
 }
-void task2()
+unsigned short task2()
 {
     cout << "Enter hex-number\n";
     unsigned short s;
@@ -38,7 +38,7 @@ void task2()
     s = s & mask;
     return s;
 }
-void task3()
+unsigned short task3()
 {
     unsigned short s;
     cout << "Enter hex-number\n";
@@ -47,7 +47,7 @@ void task3()
     s <<= mask;
     return s;
 }
-void task4()
+unsigned short task4()
 {
     unsigned short s;
     cout << "Enter hex-number\n";
@@ -56,7 +56,7 @@ void task4()
     s >>= mask;
     return s;
 }
-void task5()
+unsigned short task5()
 {
     unsigned short s;
     cout << "Enter hex-number\n";
@@ -82,7 +82,7 @@ int main()
         switch (t)
         {
         case '1':
-            cout_result(task1())
+            cout_result(task1());
             break;
         case '2':
             cout_result(task2());
