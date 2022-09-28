@@ -34,7 +34,7 @@ void create_file(string name)
     f.open(name);
     if (!f.is_open())
     {
-        cout << "Can't open file\n";
+        cout << "Can't create file\n";
         return;
     }
     f << aski;
@@ -71,7 +71,7 @@ void add_line(string name, string line)
         cout << "Can't open file\n";
         return;
     }
-    f << line;
+    f << "\n" << line;
     f.close();
 }
 
@@ -173,4 +173,98 @@ int numbersAmount(string name)
         return 0;
     }
     return amount;
+}
+
+//12 task
+
+int findEvenNumber(string name) 
+{
+    ifstream in(name);
+    while (in.good())
+    {
+        string line;
+        getline(in, line);
+        string buf = "";
+        for (int i = 0; i < line.length(); i++)
+        {
+            if (line[i] != ' ')
+            {
+                buf += line[i];
+            }
+            else
+            {
+                try
+                {
+                    int num = stoi(buf);
+                    if (num % 2 == 0)
+                    {
+                        in.close();
+                        return num;
+                    }
+                }
+                catch (std::invalid_argument const& ex)
+                {
+
+                }
+                buf = "";
+            }
+        }
+    }
+    in.close();
+    return 0;
+}
+
+void new_file(string name)
+{
+    int evenNumber = findEvenNumber(name);
+    ifstream in(name);
+    ofstream f;
+    f.open("new_file.txt");
+    string new_line;
+    while (in.good())
+    {
+        new_line = "";
+        string line;
+        getline(in, line);
+        string buf = "";
+        for (int i = 0; i < line.length(); i++)
+        {
+            if (line[i] != ' ')
+            {
+                buf += line[i];
+            }
+            else
+            {
+                try
+                {
+                    int num = stoi(buf);
+                    num += evenNumber;
+                    new_line += to_string(num) + " ";
+                }
+                catch (std::invalid_argument const& ex)
+                {
+
+                }
+                buf = "";
+            }
+        }
+        if (buf != "")
+        {
+            try
+            {
+                int num = stoi(buf);
+                num += evenNumber;
+                new_line += to_string(num);
+            }
+            catch (std::invalid_argument const& ex)
+            {
+
+            }
+        }
+        new_line += "\n";
+        f << new_line;
+    }
+    f.close();
+    in.close();
+    print_file("new_file.txt");
 }
