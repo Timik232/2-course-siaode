@@ -168,13 +168,84 @@ bool delete_by_key(string name, string key)
     return true;
 }
 //personal
-void founder_list(string name, string founder)
+bool founder_list(string name, string founder)
 {
     ifstream fb;
-    fb.open(name + ".dat", ios::out | ios::in | ios::binary);
+    fb.open(name + ".dat", ios::in | ios::binary);
     if (!fb.good())
     {
         cout << "Can't open binary file!\n";
-        return;
+        return false;
     }
+    string some_licenses="";
+    business to_find;
+    fb.read((char*)&to_find, sizeof(business));
+    while (fb.good())
+    {    
+        if (to_find.founder == founder)
+        {
+            some_licenses += to_find.license;
+            some_licenses += " ";
+        }
+        fb.read((char*)&to_find, sizeof(business));
+    }
+    if (some_licenses == "")
+    {
+        cout << "This founder hasn't licenses\n";
+        return false;
+    }
+    ofstream txt;
+    txt.open(founder + ".txt", ios::out);
+    txt << "List of licenses of founder " << founder << "\n";
+    string buf;
+    int count = 0;
+    while (some_licenses != "")
+    {
+        if (some_licenses[count] == ' ')
+        {
+            some_licenses.replace(0,count+1, "");
+            txt << buf << "\n";
+            buf = "";
+            count = 0;
+        }
+        buf += some_licenses[count];
+        count += 1;
+    }
+    return true;
+}
+
+bool revoke_licenses(string name, string textName)
+{
+    ifstream txt(textName + ".txt", ios::in);
+    fstream fb(name + ".dat", ios::in | ios::binary);
+    if (!fb.good())
+    {
+        cout << "Can't open binary file!\n";
+        return false;
+    }
+    fb.close();
+    if (!txt.good())
+    {
+        cout << "Can't open text file!\n";
+        return false;
+    }
+    while (txt.good())
+    {
+        string license;
+        getline(txt, license);
+        business bufElement;
+        fstream fb(name + ".dat", ios::in | ios::out | ios::binary);
+        while (fb.good())
+        {
+            fb.read((char*)&bufElement, sizeof(business));
+            if (bufElement.license == license)
+            {
+                bufElement.isActive = false;
+                fb.seekp(sizeof(bufElement) * (-1), ios::cur);
+                fb.write((char*)&bufElement, sizeof(business));
+                fb.close();                
+            }
+        }
+    }
+    return true;
 }

@@ -5,7 +5,7 @@ int main()
     string name;
     getline(cin, name);
     create_bit(name);*/
-    cout << "Choose action with file(1-7):\n1.From text file to binary (create binary file)\n2.Print file\n3.From binary file to text\n4.Find element by index\n5.Delete by key (license)\n6.Personal task-test (12)\n7.Exit\n";
+    cout << "Choose action with file(1-7):\n1.From text file to binary (create binary file)\n2.Print file\n3.From binary file to text\n4.Find element by index\n5.Delete by key (license)\n6.Personal task part one (12)\n7.Personal task part two(12)\n8.Exit\n";
     while (true)
     {
         char choose;
@@ -86,9 +86,22 @@ int main()
             cout << "Enter name of founder\n";
             string founder;
             getline(cin, founder);
-            founder_list(name, founder);
+            if (founder_list(name, founder))
+                cout << "File was generated\n";
         }
         else if (choose == '7')
+        {
+            cout << "Enter name of binary file\n";
+            string name = "";
+            while (name == "")
+                getline(cin, name);
+            cout << "Enter name of text file with license\n";
+            string textName;
+            getline(cin, textName);
+            if (revoke_licenses(name, textName))
+                cout << "Licenses were revoked\n";
+        }
+        else if (choose == '8')
         {
             exit(0);
         }
