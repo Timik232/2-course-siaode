@@ -1,5 +1,28 @@
 #include "hash.h"
-#include "binary_module.cpp"
+#include <fstream>
+#include "business.h"
+
+void testHeshT()
+{
+	Hash h(4);
+	cout << h.hashFunction('A') << endl;
+	HashElement h1(1, "test");
+	HashElement h2(2, "nottest");
+	HashElement h3(3, "some");
+	HashElement h4(4, "somebody");
+	HashElement h5(5, "12345do");
+	h.insertItem(h1);
+	h.insertItem(h2);
+	h.insertItem(h3);
+	h.insertItem(h4);
+	h.insertItem(h5);
+	cout << "Before deleting:\n";
+	h.displayHash();
+	h.deleteItem("test");
+	cout << "after deleting:\n";
+	h.displayHash();
+	cout << "Number of key 'nottest' is " << h.findKey("nottest") << endl;
+}
 void hash_menu()
 {
 	cout << "Enter amount of hash-elemnts to generate hash-table\n";
@@ -54,27 +77,7 @@ void hash_menu()
 		}
 	}
 }
-void testHeshT()
-{
-	Hash h(4);
-	cout << h.hashFunction('A') << endl;
-	HashElement h1(1, "test");
-	HashElement h2(2, "nottest");
-	HashElement h3(3, "some");
-	HashElement h4(4, "somebody");
-	HashElement h5(5, "12345do");
-	h.insertItem(h1);
-	h.insertItem(h2);
-	h.insertItem(h3);
-	h.insertItem(h4);
-	h.insertItem(h5);
-	cout << "Before deleting:\n";
-	h.displayHash();
-	h.deleteItem("test");
-	cout << "after deleting:\n";
-	h.displayHash();
-	cout << "Number of key 'nottest' is " << h.findKey("nottest") << endl;
-}
+
 void file_hash_menu()
 {
 	cout << "Enter amount of hash-elemnts to generate hash-table\n";
@@ -89,33 +92,32 @@ void file_hash_menu()
 		string name;
 		string key;
 		int number;
+		bool isError = false;
 		business example;
-		switch (c)
+		if (c == '1')
 		{
-		case '1':
 			cout << "Enter name of text file\n";
 			cin >> name;
 			ifstream in(name + ".txt", ios::in);
 			if (!in.good())
 			{
 				cout << "Can't open text file!\n";
-				break;
+				isError = true;
 			}
-			while (in.good())
+			if (!isError)
 			{
-				business st;
-				in >> st.license;
-				in >> st.name;
-				in >> st.founder;
+				in >> example.license;
+				in >> example.name;
+				in >> example.founder;
 				char buf;
 				in >> buf;
 				if (buf == '1')
-					st.isActive = true;
-				else st.isActive = false;
-
+					example.isActive = true;
+				else example.isActive = false;
 			}
-			break;
-		case '2':
+		}/*
+		else if (c == '2')
+		{
 			cout << "Enter key of element\n";
 			cin >> key;
 			number = H.findKey(key);
@@ -124,8 +126,9 @@ void file_hash_menu()
 			cin >> name;
 			if (delete_by_key(name, key))
 				cout << "Element was deleted\n";
-			break;
-		case '3':
+		}
+		else if (c == '3')
+		{
 			cout << "Enter key of element\n";
 			cin >> key;
 			number = H.findKey(key);
@@ -134,9 +137,12 @@ void file_hash_menu()
 			if (example.isActive)
 				cout << "active\n";
 			else cout << "not active\n";
-			break;
-		case '4':
+		}*/
+		else if (c=='4')
 			return;
+		else
+		{
+			cout << "Invalid input, try again\n";
 		}
 	}
 }
