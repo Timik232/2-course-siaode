@@ -86,34 +86,36 @@ void file_hash_menu()
 	Hash H(n);
 	cout << "Choose action with hash:\n1.Insert element from file\n2.Delete element by key\n3.Find element by key\n4.Exit\n";
 	char c;
+	int count = 0;
 	while (true)
 	{
 		cin >> c;
 		string name;
 		string key;
 		int number;
+		ifstream in;
 		bool isError = false;
 		business example;
 		if (c == '1')
-		{
-			cout << "Enter name of text file\n";
-			cin >> name;
-			ifstream in(name + ".txt", ios::in);
-			if (!in.good())
+		{			
+			if (!in.is_open())
 			{
-				cout << "Can't open text file!\n";
-				isError = true;
+				cout << "Enter name of text file\n";
+				cin >> name;
+				in.open(name + ".txt", ios::in || ios::binary);
 			}
-			if (!isError)
+			if (in.good())
 			{
-				in >> example.license;
-				in >> example.name;
-				in >> example.founder;
-				char buf;
-				in >> buf;
-				if (buf == '1')
-					example.isActive = true;
-				else example.isActive = false;
+				in.read((char*)&example, sizeof(business));
+				HashElement El(count, example.license);
+				count += 1;
+				H.insertItem(El);
+				cout << "HeshElement was added\n";
+			}
+			else
+			{
+				cout << "File ended\n";
+				in.close();
 			}
 		}/*
 		else if (c == '2')
