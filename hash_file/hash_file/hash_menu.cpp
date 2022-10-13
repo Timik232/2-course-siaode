@@ -102,7 +102,7 @@ void file_hash_menu()
 			{
 				cout << "Enter name of text file\n";
 				cin >> name;
-				in.open(name + ".txt", ios::in || ios::binary);
+				in.open(name + ".dat", ios::in || ios::binary);
 			}
 			if (in.good())
 			{
