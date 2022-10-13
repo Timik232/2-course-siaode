@@ -1,6 +1,7 @@
 #include "hash.h"
 #include <fstream>
-#include "business.h"
+//#include "business.h"
+#include "binar.cpp"
 
 void testHeshT()
 {
