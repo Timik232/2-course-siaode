@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include "hash_menu.cpp"
-#include "binar.cpp"
+//#include "binar.cpp"
 
 	
 int main()

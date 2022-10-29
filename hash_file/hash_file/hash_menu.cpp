@@ -6,7 +6,7 @@
 void testHeshT()
 {
 	Hash h(4);
-	cout << h.hashFunction('A') << endl;
+	cout << h.hashFunction("A") << endl;
 	HashElement h1(1, "test");
 	HashElement h2(2, "nottest");
 	HashElement h3(3, "some");
@@ -85,9 +85,10 @@ void file_hash_menu()
 	int n;
 	cin >> n;
 	Hash H(n);
-	cout << "Choose action with hash:\n1.Insert element from file\n2.Delete element by key\n3.Find element by key\n4.Exit\n";
+	cout << "Choose action with hash:\n1.Insert element from file\n2.Delete element by key\n3.Find element by key\n4.Print hash-table\n5.Read full-file to hash\n6.Exit\n";
 	char c;
 	int count = 0;
+	int index = 0;
 	while (true)
 	{
 		cin >> c;
@@ -95,19 +96,17 @@ void file_hash_menu()
 		string key;
 		int number;
 		ifstream in;
-		bool isError = false;
-		business example;
+		business example;		
 		if (c == '1')
 		{			
-			if (!in.is_open())
-			{
-				cout << "Enter name of text file\n";
-				cin >> name;
-				in.open(name + ".dat", ios::in | ios::binary);
-			}
+			cout << "Enter name of binar file\n";
+			cin >> name;
+			in.open(name + ".dat", ios::in | ios::binary);
 			if (in.good())
 			{
+				in.seekg(index * sizeof(business));
 				in.read((char*)&example, sizeof(business));
+				index += 1;
 				HashElement El(count, example.license);
 				count += 1;
 				H.insertItem(El);
@@ -115,10 +114,10 @@ void file_hash_menu()
 			}
 			else
 			{
-				cout << "File ended\n";
-				in.close();
+				cout << "File ended or can't open\n";
 			}
-		}/*
+			in.close();
+		}
 		else if (c == '2')
 		{
 			cout << "Enter key of element\n";
@@ -132,17 +131,45 @@ void file_hash_menu()
 		}
 		else if (c == '3')
 		{
+			cout << "Enter name of file\n";
+			cin >> name;
 			cout << "Enter key of element\n";
 			cin >> key;
 			number = H.findKey(key);
-			example = get_by_index(number);
+			example = get_by_index(name,number);
 			cout << "Was found:\n" << example.license << " " << example.name << " " << example.founder << " ";
 			if (example.isActive)
 				cout << "active\n";
 			else cout << "not active\n";
-		}*/
+		}
 		else if (c=='4')
+			H.displayHash();
+		else if (c == '5') 
+		{
+			cout << "Enter name of binar-file\n";
+			cin >> name;
+			in.open(name + ".dat", ios::in | ios::binary);
+			if (!in.good())
+			{
+				cout << "Can't open\n";
+			}
+			else
+			{
+				in.read((char*)&example, sizeof(business));
+				while (in.good())
+				{					
+					HashElement El(count, example.license);
+					count += 1;
+					H.insertItem(El);
+					in.read((char*)&example, sizeof(business));
+				}
+				cout << "HeshElements was added\n";
+			}
+		}
+		else if (c == '6')
+		{			
 			return;
+		}
 		else
 		{
 			cout << "Invalid input, try again\n";

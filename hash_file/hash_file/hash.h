@@ -23,9 +23,7 @@ public:
 	Hash(int amount = 100);
 	void insertItem(HashElement element);
 	void deleteItem(string license);
-	int hashFunction(unsigned int x) {
-		return (x % amount);
-	}
+	unsigned int hashFunction(string license);
 	void displayHash();
 	int findKey(string license);
 };
