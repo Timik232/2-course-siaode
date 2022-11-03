@@ -7,6 +7,7 @@ using namespace std;
 class AVL_tree
 {
 private:
+	string file_name;
 	AVL_element* root;
 	AVL_element* rotate_left(AVL_element* el);
 	AVL_element* rotate_right(AVL_element* el);
@@ -21,6 +22,8 @@ public:
 	AVL_tree();
 	AVL_tree(string license, int numb);
 	~AVL_tree();
+	string get_file_name();
+	void set_file_name(string name);
 	void insert(string license, int numb);
 	bool erase(string key);
 	bool build_tree(string file_name);	

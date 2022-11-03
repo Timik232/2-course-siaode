@@ -10,5 +10,6 @@ public:
 	business get_by_index(string name, int index);
 	bool delete_by_key(string name, string key);
 	bool insert_element(string name, business st);
+	bool delete_by_index(string name, int index);
 };
 #endif

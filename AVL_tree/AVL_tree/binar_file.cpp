@@ -137,6 +137,26 @@ business binar_file::get_by_index(string name, int index)
     fb.close();
     return result;
 }
+bool binar_file::delete_by_index(string name, int index)
+{
+    fstream fb;
+    fb.open(name + ".dat", ios::out | ios::in | ios::binary);
+    if (!fb.good())
+    {
+        cout << "Can't open binary file!\n";
+        return false;
+    }
+    business lastELement;
+    fb.read((char*)&lastELement, sizeof(business));
+    while (fb.good())
+        fb.read((char*)&lastELement, sizeof(business));
+    fb.close();
+    fb.open(name + ".dat", ios::out | ios::in | ios::binary);
+    fb.seekg(index * sizeof(business));
+    fb.write((char*)&lastELement, sizeof(business));
+    fb.close();
+    return true;
+}
 bool binar_file::delete_by_key(string name, string key)
 {
     fstream fb;
@@ -158,7 +178,7 @@ bool binar_file::delete_by_key(string name, string key)
     {
         fb.read((char*)&bufElement, sizeof(business));
     }
-    fb.seekp(sizeof(bufElement) * (-1), ios::cur);
+    fb.seekp(sizeof(bufElement) * (1), ios::cur);
     fb.write((char*)&lastElement, sizeof(business));
     return true;
 }
@@ -248,7 +268,7 @@ bool revoke_licenses(string name, string textName)
             if (bufElement.license == license)
             {
                 bufElement.isActive = false;
-                fb.seekp(sizeof(bufElement) * (-1), ios::cur);
+                fb.seekp(sizeof(bufElement) * (1), ios::cur);
                 fb.write((char*)&bufElement, sizeof(business));
                 fb.close();
             }

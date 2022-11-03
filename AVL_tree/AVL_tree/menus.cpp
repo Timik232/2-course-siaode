@@ -1,6 +1,8 @@
 #include "Bsearch_tree.cpp"
-#include "binar_file.cpp"
 #include "AVL_tree.cpp"
+#include <string>
+#include "binar_file.h"
+
 void binar_menu()
 {
     binar_file bfile = binar_file();
@@ -166,11 +168,11 @@ void bsearch_menu()
             cout << "Enter key-license to find element\n";
             string license = "";
             cin >> license;
-            Tree_element* found = tree.find(license);
-            if (found)
-                cout << "Element was found, license and number are:\n" << found->license << " " << found->number << endl;
-            else
-                cout << "Wasn't found\n";
+            business found = tree.find(license);
+            if (found.license[0] == '-' && found.license[1] == '1')
+                cout << "Not found\n";
+            else 
+                cout << "Element was found, license and number are:\n" << found.license << " " << found.founder << " " << found.name << endl;
         }
         else if (c == '4')
         {
@@ -179,8 +181,24 @@ void bsearch_menu()
             int numb;
             cin >> license;
             cin >> numb;
-            tree.insert(license,numb);
-            cout << "Element was inserted\n";
+            binar_file bfile = binar_file();
+            cout << "Enter all information about business in format:\nlicense\nname \nfounder \nactive (0 or 1)\n";
+            business st;
+            cin >> st.license;
+            cin >> st.name;
+            cin >> st.founder;
+            char buf;
+            cin >> buf;
+            if (buf == 1)
+                st.isActive = true;
+            else
+                st.isActive = false;
+            if (bfile.insert_element(tree.get_file_name(), st))
+            {
+                tree.insert(license, numb);
+                binar_file bin = binar_file();
+                cout << "Element was inserted\n";
+            }
         }
         else if (c == '5')
         {
@@ -199,8 +217,7 @@ void bsearch_menu()
         {
             cout << "Invalid input, try again\n";
         }
-    }
-        
+    }        
 }
 void AVL_menu()
 {

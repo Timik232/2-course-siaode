@@ -1,5 +1,5 @@
 #include "Bsearch_tree.h"
-#include "business.h"
+#include "binar_file.cpp"
 #include <fstream>
 
 Bsearch_tree::Bsearch_tree(string license,int numb)
@@ -12,6 +12,10 @@ Bsearch_tree::Bsearch_tree()
 {
 	root = nullptr;
 	size = 0;
+}
+void Bsearch_tree::set_file_name(string file_name)
+{
+	this->file_name = file_name;
 }
 void Bsearch_tree::delete_tree(Tree_element* el)
 {
@@ -47,25 +51,25 @@ void Bsearch_tree::rec_print_tree(Tree_element* el, int space = 0)
 			rec_print_tree(el->left, space + 1);
 	}
 }
-Tree_element* Bsearch_tree::find(string key)
+business Bsearch_tree::find(string key)
 {
 	Tree_element* el = root;
 	while (el && el->license != key)
-	{
-		if (el->license == key)
-		{
-			return el;
-		}
-		else if (el->license > key)
+	{		
+		if (el->license > key)
 			el = el->left;
 		else
 			el = el->right;
 	}
 	if (el->license == key)
 	{
-		return el;
+		binar_file bin = binar_file();
+		return bin.get_by_index(file_name,el->number);
 	}
-	return nullptr;
+	business st = business();
+	st.license[0] = '-';
+	st.license[1] = '1';
+	return st;
 }
 void Bsearch_tree::insert(string license, int number)
 {
@@ -108,6 +112,8 @@ bool Bsearch_tree::erase(string key)
 	}
 	if (!el)
 		return false;
+	binar_file bin = binar_file();
+	bin.delete_by_key(file_name, el->license);
 	if (el->left == nullptr)
 	{
 		if (parent && parent->left == el)
@@ -138,8 +144,13 @@ bool Bsearch_tree::erase(string key)
 	el->number = replace_number;
 	return true;
 }
+string Bsearch_tree::get_file_name()
+{
+	return file_name;
+}
 bool Bsearch_tree::build_tree(string fileName)
 {
+	set_file_name(fileName);
 	ifstream fb;
 	fb.open(fileName + ".dat", ios::in | ios::binary);
 	if (!fb.good())
