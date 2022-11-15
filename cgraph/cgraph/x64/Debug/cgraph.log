@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\Тимур\source\repos\cgraph\cgraph\graph.cpp(15,24): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\cgraph\cgraph\graph.cpp(43,10): warning C4101: already: неиспользованная локальная переменная
+  cgraph.vcxproj -> C:\Users\Тимур\source\repos\cgraph\x64\Debug\cgraph.exe
