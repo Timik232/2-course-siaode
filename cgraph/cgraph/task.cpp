@@ -4,7 +4,7 @@
 
 void spanning_tree() //остовное дерево
 {
-
+	cout << "Not completed yet\n";
 }
 
 void menu(New_graph* graph = nullptr)

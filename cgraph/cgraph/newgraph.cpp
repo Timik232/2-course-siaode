@@ -26,9 +26,37 @@ bool New_graph::have_odd()
 	}
 	return false;
 }
+bool New_graph::is_connected()
+{
+	vector<bool> visited;
+	visited.resize(edges.size());
+	for (int j = 0; j < edges.size(); j++)
+		visited[j] = false;
+	visited[0] = true;
+	for (int j = 0; j < edges[0].size(); j += 2)
+	{
+		visited[edges[0][j]] = true;
+	}
+	for (int i = 1; i < edges.size(); i++)
+	{
+		bool flag = false;
+		for (int j = 0; j < edges[0].size(); j += 2)
+			if (visited[edges[i][j]])
+				flag = true;
+		if (flag)
+			for (int j = 0; j < edges[i].size(); j += 2)
+			{
+				visited[edges[i][j]] = true;
+			}
+	}
+	for (int i = 0; i < visited.size(); i++)
+		if (!visited[i])
+			return false;
+	return true;
+}
 bool New_graph::euler_cycle()
 {
-	if (have_odd())
+	if (have_odd() || !is_connected())
 		return false;
 	else
 		return true;

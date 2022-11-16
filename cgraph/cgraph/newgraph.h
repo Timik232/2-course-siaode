@@ -23,6 +23,7 @@ private:
     //vector<list<Edge>*> edges;
     vector<vector<int>> edges;
     bool have_odd();
+    bool is_connected();
 public:
     void print();
     void add_edge(int src, int target, int length=1);
