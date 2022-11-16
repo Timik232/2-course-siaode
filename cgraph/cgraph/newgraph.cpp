@@ -1,4 +1,5 @@
 #include "newgraph.h"
+#include <list>
 void New_graph::print() {
 	for (int i = 0; i < edges.size(); i++) 
 	{
@@ -60,4 +61,26 @@ bool New_graph::euler_cycle()
 		return false;
 	else
 		return true;
+}
+void New_graph::DFC(vector<bool>& visited, New_graph* &new_tree, int v)
+{
+	visited[v] = true;
+	vector <int> el = edges[v];	
+	for (int i = 0; i < el.size()-1; i+=2)
+	{
+		if (!visited[i])
+		{
+			new_tree->add_edge(v, el[v], el[v + 1]);
+			DFC(visited, new_tree, i);
+		}
+	}
+	
+	/*list::iterator i;
+	for (i = adjList.begin(); i != adjList.end(); ++i)
+		if (!visited[*i])
+			DFC(visited,*i);*/
+}
+int New_graph::get_size()
+{
+	return edges.size();
 }

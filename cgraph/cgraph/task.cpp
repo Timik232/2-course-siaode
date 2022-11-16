@@ -2,9 +2,16 @@
 #include "newgraph.cpp"
 #include <string>
 
-void spanning_tree() //остовное дерево
+
+New_graph* spanning_tree(New_graph* gr) //остовное дерево
 {
+	vector <bool> visited;
+	visited.resize(gr->get_size());
+	New_graph* new_tree = new New_graph();
+	gr->DFC(visited, new_tree);
+	new_tree->print();
 	cout << "Not completed yet\n";
+	return new_tree;
 }
 
 void menu(New_graph* graph = nullptr)
@@ -82,7 +89,7 @@ void menu(New_graph* graph = nullptr)
 		}
 		else if (v == '4')
 		{
-			spanning_tree();
+			spanning_tree(graph);
 		}
 		else if (v == '5')
 			return;
