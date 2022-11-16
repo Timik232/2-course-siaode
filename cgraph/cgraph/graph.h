@@ -9,8 +9,8 @@ private:
 	vector <int> length;
 	string value;
 	void add_pedge(Graph* point,int length=1);
-	void rec_print(vector <string>& visited, int len,int space = 0);
-
+	void rec_print(int len,int space = 0);
+	
 public:
 	Graph(string value);
 	~Graph();
@@ -20,5 +20,6 @@ public:
 	bool have_edge(string val);
 	string get_value();
 	int get_edge_size();
+	bool euler_cycle(bool is_first = false);
 };
 #endif

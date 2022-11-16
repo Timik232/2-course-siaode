@@ -39,7 +39,7 @@ Graph* Graph::find_edge(string value)
 bool Graph::add_edge(string value,string ins_value, int length)
 {
 	Graph* edge = new Graph(value);
-	edge->add_pedge(edge,length);	
+	//edge->add_pedge(this,length);	
 	if (ins_value == "-" || ins_value == value)
 	{
 		pointers.push_back(edge);
@@ -47,16 +47,6 @@ bool Graph::add_edge(string value,string ins_value, int length)
 	}
 	else
 	{
-		Graph* already = find_edge(value);
-		if (already != nullptr)
-		{
-			if (already->have_edge(ins_value))
-				return false;
-			else 
-			{
-				already->add_edge(ins_value, "-", length);
-			}
-		}
 		Graph* found = find_edge(ins_value);
 		if (found != nullptr)
 			found->add_edge(value, "-", length);
@@ -68,38 +58,23 @@ string Graph::get_value()
 {
 	return value;
 }
-void Graph::rec_print(vector <string>& visited,  int len, int space)
+void Graph::rec_print(int len, int space)
 {
-	bool flag = false;
-	for (int i = 0; i < visited.size(); i++)
-	{
-		if (this->value == visited[i])
-		{
-			flag = true;
-			break;
-		}
-	}
-	if (!flag)
-	{
 		for (int i = 0; i < space; i++)
 			cout << "  ";
 		cout << "-" << len << "- " << this->value << endl;
-
 		for (int i = 0; i < pointers.size(); i++)
 		{
-			pointers[i]->rec_print(visited, length[i], space + 1);
+			pointers[i]->rec_print(length[i], space + 1);
 
 		}
-	}
 }
 void Graph::print()
 {
 	cout << this->value << endl;
-	vector <string> visited;
-	visited.push_back(this->value);
 	for (int i = 0; i < pointers.size(); i++)
 	{
-		pointers[i]->rec_print(visited,1,1);
+		pointers[i]->rec_print(1,1);
 	}
 }
 bool Graph::have_edge(string value)
@@ -110,4 +85,23 @@ bool Graph::have_edge(string value)
 			return true;
 	}
 	return false;
+}
+bool Graph::euler_cycle(bool is_first)
+{
+	if (is_first)
+	{
+		if (pointers.size() % 2 != 0)
+			return false;
+	}
+	else
+	{
+		if ((pointers.size() + 1) % 2 != 0) //добавляем 1, посколкьу в самих графах нет указателя на тот граф, который его создал
+			return false;
+	}
+	for (int i = 0; pointers.size(); i++)
+	{
+		if (!pointers[i]->euler_cycle())
+			return false;
+	}
+	return true;
 }
