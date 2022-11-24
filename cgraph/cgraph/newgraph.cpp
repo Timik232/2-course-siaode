@@ -90,3 +90,26 @@ int New_graph::get_size()
 {
 	return edges.size();
 }
+void New_graph::span_recprint(int node, int spaces)
+{
+	if (edges[node].size() != 0)
+	{
+		for (int i = 0; i < spaces; i++)
+		{
+			cout << "  ";
+		}
+		cout << node << endl;
+		for (int i = 2; i < edges[node].size() -1; i+=2)
+		{
+			span_recprint(edges[node][i], spaces + 1);
+		}
+	}
+}
+void New_graph::spanning_print()
+{
+	cout << 0 << endl;
+	for (int i = 0; i < edges[0].size() - 1; i+=2)
+	{
+		span_recprint(edges[0][i], 1);
+	}
+}

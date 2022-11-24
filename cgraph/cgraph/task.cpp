@@ -9,7 +9,7 @@ New_graph* spanning_tree(New_graph* gr) //остовное дерево
 	visited.resize(gr->get_size());
 	New_graph* new_tree = new New_graph();
 	gr->DFC(visited, new_tree);
-	new_tree->print();
+	new_tree->spanning_print();
 	return new_tree;
 }
 
