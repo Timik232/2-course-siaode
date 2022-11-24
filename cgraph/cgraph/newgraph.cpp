@@ -8,6 +8,12 @@ void New_graph::print() {
 				cout << i << " -" << edges[i][j+1] << "- " << edges[i][j] << endl;
 	}
 }
+int max(int a, int b)
+{
+	if (a > b)
+		return a;
+	else return b;
+}
 void New_graph::add_edge(int src, int target, int length)
 {
 	int more = max(src, target);
@@ -68,10 +74,10 @@ void New_graph::DFC(vector<bool>& visited, New_graph* &new_tree, int v)
 	vector <int> el = edges[v];	
 	for (int i = 0; i < el.size()-1; i+=2)
 	{
-		if (!visited[i])
+		if (!visited[el[i]])
 		{
-			new_tree->add_edge(v, el[v], el[v + 1]);
-			DFC(visited, new_tree, i);
+			new_tree->add_edge(v, el[i], el[i + 1]);
+			DFC(visited, new_tree, el[i]);
 		}
 	}
 	

@@ -1,4 +1,4 @@
-#include "graph.cpp"
+
 #include "newgraph.cpp"
 #include <string>
 
@@ -10,7 +10,6 @@ New_graph* spanning_tree(New_graph* gr) //остовное дерево
 	New_graph* new_tree = new New_graph();
 	gr->DFC(visited, new_tree);
 	new_tree->print();
-	cout << "Not completed yet\n";
 	return new_tree;
 }
 
