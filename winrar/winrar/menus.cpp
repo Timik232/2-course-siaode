@@ -3,6 +3,7 @@
 #include <time.h>
 #include <list>
 #include <vector>
+#include <queue>
 using namespace std;
 #define _rand(min, max) ( rand() % ((max) - (min) + 1) + (min) )
 
@@ -10,11 +11,12 @@ struct dict
 {
 	char value;
 	int amount;
-	vector <bool> code;
-	dict(char v, int am = 1)
+	string code;
+	dict(char v, int am = 1, string c = "")
 	{
 		this->value = v;
 		this->amount = am;		
+		code = c;
 	}
 };
 
@@ -396,17 +398,35 @@ int get_middle(vector <dict> d, int start, int end)
 		}
 	}
 }
-
-void get_tree(vector <dict> d, int start, int end, vector <string>& arr, string code)
+struct shenanno
 {
+	int start, end;
+	char value;
+	string code;
+	shenanno* left;
+	shenanno* right;
+	shenanno(int s, int e,string c = "")
+	{
+		start = s;
+		e = end;
+		left = nullptr;
+		right = nullptr;
+		code = c;
+	}
+};
+void get_tree(vector <dict> d, int start, int end, vector <string>& arr, string code)//shenanno &shen)
+{
+
 	if (end - start == 1)
 	{
+		//shen.code = code;
 		arr[start] = code;
 		return;
 	}
 	int middle = get_middle(d, start, end);
+	//shen.right = new shenanno(middle, end);
 	get_tree(d, middle, end, arr, code + "1");
-
+	//shen.left = new shenanno(start, middle);
 	get_tree(d, start, middle, arr, code + "0");
 }
 void make_struct(vector <dict>& diction, string line)
@@ -424,9 +444,30 @@ void make_struct(vector <dict>& diction, string line)
 		}
 	}
 }
+string shen_decode(vector <string> arr, vector <dict> dict, string code)
+{
+	string dec_line;
+	string buf = "";
+	for (int i = 0; i < code.length(); i++)
+	{
+		buf += code[i];
+		for (int j = 0; j < arr.size(); j++)
+		{
+			if (buf == arr[j])
+			{
+				dec_line += dict[j].value;
+				buf = "";
+				break;
+			}
+		}
+	}
+
+	return dec_line;
+}
 void shenano()
 {
 	string line = "Цветом мой зайчишка – белый, А ещё, он очень смелый! Не боится он лисицы, Льва он тоже не боится.";
+	cout << "Original line = " << line << endl;
 	//line = "aaaaaaaaaaaaaabbbbbbbcccccdddddeeee";
 	vector <dict> diction;
 
@@ -435,6 +476,7 @@ void shenano()
 	int middle = get_middle(diction,0,diction.size());
 	vector <string> arr;
 	arr.resize(diction.size());
+	//shenanno *root = new shenanno(0, diction.size());
 	get_tree(diction,middle, diction.size(),arr,"1");
 
 	get_tree(diction, 0, middle, arr,"0");
@@ -442,23 +484,16 @@ void shenano()
 	{
 		cout << diction[i].value << " " << diction[i].amount << " " << arr[i] << endl;
 	}*/
-	for (int i = 0; i < diction.size(); i++)
-	{
-		for (int j = 0; j < arr[i].size(); j++)
-		{
-			if (arr[i][j] == '0')
-				diction[i].code.push_back(false);
-			else 
-				diction[i].code.push_back(true);
-		}
-		
-	}
+	
 	string newline = "";
 	for (int i = 0; i < line.length(); i++)
 	{
 		newline += arr[dict_find(diction, line[i])];
 	}
-	cout << newline;
+	cout << "Encoded line = " << newline << endl;
+	string decode_line = "";
+	decode_line = shen_decode(arr, diction, newline);
+	cout << "Decoded line = " << decode_line << endl;
 }
 struct haff 
 {
@@ -479,50 +514,95 @@ struct haff
 		this->right = r;
 	}
 };
-bool compare(haff* h1, haff* h2)
+struct compare
 {
-	return h1->amount > h2->amount;
-}
-struct haffcode
-{
-	char value;
-	string code;
-	haffcode(char v, string c)
+	bool operator()(haff* h1, haff* h2)
 	{
-		value = v;
-		code = c;
+		return h1->amount > h2->amount;
 	}
 };
-void haff_encode(vector <haffcode> dict, string code, haff* root)
+//struct haffcode
+//{
+//	char value;
+//	string code;
+//	haffcode(char v, string c)
+//	{
+//		value = v;
+//		code = c;
+//	}
+//};
+void haff_encode(vector <dict> &dict, string code, haff* root)
 {
 	if (!root)
 		return;
 	if (!root->left && !root->right)
 	{
-		haffcode hcode = haffcode(root->value, code);
+		dict[dict_find(dict, root->value)].code = code;
 	}
 	haff_encode(dict, code + "0", root->left);
 	haff_encode(dict, code + "1", root->right);
 }
-string haff_decode(haff* root, int &index, string code)
+char haff_decode(haff* root, int &index, string code)
 {
 	if (!root)
-		return;
+		return '\0';
 	if (!root->left && !root->right)
 	{
-		return to_string(root->value);
+		return root->value;
 	}
 	index++;
+	if (index > code.length())
+		return '\0';
 	if (code[index] == '0')
-		haff_decode(root->left, index, code);
+		return haff_decode(root->left, index, code);
 	else
-		haff_decode(root->right, index, code);
+		return haff_decode(root->right, index, code);
 }
 void hoffman()
 {
 	string line = "Комолов Тимур Витальевич";
+	cout << "Original line = " << line << endl;
 	vector <dict> diction;
 	make_struct(diction, line);
 	sort(diction);
-
+	//vector <dict> newdict;
+	priority_queue <haff*, vector <haff*>, compare> qu;
+	for (int i = 0; i < diction.size(); i++)
+	{
+		qu.push(new haff(diction[i].value, diction[i].amount));
+	}
+	while (qu.size() != 1)
+	{
+		haff* left = qu.top(); 
+		qu.pop();
+		haff* right = qu.top();	
+		qu.pop();
+		//haff* left = new haff(diction[i].value, diction[i].amount);
+		//haff* right = new haff(diction[i-1].value, diction[i-1].amount);
+		int summ = left->amount + right->amount;
+		qu.push(new haff('\0', summ, left, right));
+	}
+	haff* root = qu.top();
+	haff_encode(diction, "", root);
+	string code = "";
+	for (int i = 0; i < line.size(); i++)
+	{
+		code += diction[dict_find(diction, line[i])].code;
+	}	
+	cout << "Compressed line = " << code << endl;
+	cout << "Decoded line = ";
+	string orig_line = "";
+	string buf = "";
+	for (int i = 0; i < code.length(); i++)
+	{
+		buf += code[i];
+		int index = -1;
+		char dec = haff_decode(root, index, buf);
+		if (dec != '\0')
+		{
+			orig_line += dec;
+			buf = "";
+		}
+	}
+	cout << orig_line << endl;
 }
