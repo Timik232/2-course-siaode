@@ -1,12 +1,13 @@
 ﻿
 #include "menus.cpp"
+#include <fstream>
 
 int main()
 {
     setlocale(LC_ALL, "Russian");
     while (true)
     {
-        cout << "Choose task (1-4)\n1.RLE\n2.Lempel-Ziv\n3.Hoffman\n4.Shannon-fano\n5.Exit\n";
+        cout << "Choose task (1-4)\n1.RLE\n2.Lempel-Ziv\n3.Huffman\n4.Shannon-fano\n5.Compress large file with Huffman\n6.Exit\n";
         string c;
         cin >> c;
         if (c == "1")
@@ -26,6 +27,20 @@ int main()
             shenano();
         }
         else if (c == "5")
+        {
+            ifstream f;
+            f.open("large.txt");
+            string line;
+            string large = "";
+            while (!f.eof())
+            {
+                getline(f, line);
+                large += line;
+            }
+            hoffman(large);
+            f.close();
+        }
+        else if (c == "6")
         {
             exit(0);
         }

@@ -160,7 +160,7 @@ string LZ77(string line)
 				if (buf.rfind(line.substr(last, count - last + 1)) == -1)
 				{
 					
-					if (line[count] != buf[0] || count - last + 1 >= BUF_SIZE && line[count] == buf[0])
+					if (line[count] != buf[0])// || count - last + 1 >= BUF_SIZE && line[count] == buf[0])
 					{
 						len += count - last;
 						//newline += "<" + to_string(offset) + "," + to_string(len) + "," + line[count] + ">";
@@ -560,10 +560,15 @@ char haff_decode(haff* root, int &index, string code)
 	else
 		return haff_decode(root->right, index, code);
 }
-void hoffman()
+void hoffman(string large = "")
 {
 	string line = "Комолов Тимур Витальевич";
-	cout << "Original line = " << line << endl;
+	if (large != "")
+	{
+		line = large;
+	}
+	if (large == "")
+		cout << "Original line = " << line << endl;
 	vector <dict> diction;
 	make_struct(diction, line);
 	sort(diction);
@@ -591,10 +596,13 @@ void hoffman()
 	{
 		code += diction[dict_find(diction, line[i])].code;
 	}	
-	cout << "Compressed line = " << code << endl;
-	cout << "Decoded line = ";
+	if (large == "")
+		cout << "Compressed line = " << code << endl;
+	if (large == "")
+		cout << "Decoded line = ";
 	string orig_line = "";
 	string buf = "";
+	if (large == "")
 	for (int i = 0; i < code.length(); i++)
 	{
 		buf += code[i];
@@ -615,6 +623,11 @@ void hoffman()
 			buf = "";
 		}*/
 	}
-	cout << orig_line << endl;
+	if (large == "")
+		cout << orig_line << endl;
 	cout << "Compressed ratio = " << ratio(line.length() * 8, code.length()) << endl;
+	if (large != "")
+	{
+		cout << "Size is " << code.length() * 8 << " bytes\n";
+	}
 }
