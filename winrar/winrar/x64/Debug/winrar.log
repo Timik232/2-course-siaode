@@ -1,1 +1,13 @@
-﻿  winrar.vcxproj -> C:\Users\Тимур\source\repos\winrar\x64\Debug\winrar.exe
+﻿  winrar.cpp
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(29,25): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(73,76): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(97,80): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(101,14): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(120,80): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(154,44): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(182,78): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(304,76): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(312,76): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(476,50): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\winrar\winrar\menus.cpp(480,49): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  winrar.vcxproj -> C:\Users\Тимур\source\repos\winrar\x64\Debug\winrar.exe

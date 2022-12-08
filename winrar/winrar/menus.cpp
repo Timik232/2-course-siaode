@@ -538,6 +538,7 @@ void haff_encode(vector <dict> &dict, string code, haff* root)
 	if (!root->left && !root->right)
 	{
 		dict[dict_find(dict, root->value)].code = code;
+		//cout << dict[dict_find(dict, root->value)].value << " " << code << endl;
 	}
 	haff_encode(dict, code + "0", root->left);
 	haff_encode(dict, code + "1", root->right);
@@ -596,13 +597,22 @@ void hoffman()
 	for (int i = 0; i < code.length(); i++)
 	{
 		buf += code[i];
-		int index = -1;
-		char dec = haff_decode(root, index, buf);
+		for (int i = 0; i < diction.size(); i++)
+		{
+			if (buf == diction[i].code)
+			{
+				orig_line += diction[i].value;
+				buf = "";
+				break;
+			}
+		}
+		//int index = -1;
+		/*char dec = haff_decode(root, index, buf);
 		if (dec != '\0')
 		{
 			orig_line += dec;
 			buf = "";
-		}
+		}*/
 	}
 	cout << orig_line << endl;
 }
