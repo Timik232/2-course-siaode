@@ -6,7 +6,7 @@ int main()
     setlocale(LC_ALL, "Russian");
     while (true)
     {
-        cout << "Choose task (1-3)\n1.RLE\n2.Lempel-Ziv\n3.Hoffman\n4.Shannon-fano\n5.Exit\n";
+        cout << "Choose task (1-4)\n1.RLE\n2.Lempel-Ziv\n3.Hoffman\n4.Shannon-fano\n5.Exit\n";
         string c;
         cin >> c;
         if (c == "1")

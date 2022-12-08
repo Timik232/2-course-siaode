@@ -494,6 +494,7 @@ void shenano()
 	string decode_line = "";
 	decode_line = shen_decode(arr, diction, newline);
 	cout << "Decoded line = " << decode_line << endl;
+	cout << "Compressed ratio = " << ratio(line.length() * 8, newline.length()) << endl;
 }
 struct haff 
 {
@@ -615,4 +616,5 @@ void hoffman()
 		}*/
 	}
 	cout << orig_line << endl;
+	cout << "Compressed ratio = " << ratio(line.length() * 8, code.length()) << endl;
 }
