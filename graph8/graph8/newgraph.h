@@ -30,5 +30,6 @@ public:
     void add_edge(int src, int target, int length=1);
     int get_size();
     bool have_hamiltonian();
+    vector <vector <int>> all_hamiltonian();
 };
 #endif

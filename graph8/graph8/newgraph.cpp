@@ -56,3 +56,7 @@ bool New_graph::have_hamiltonian()
 	}
 	return true;
 }
+vector <vector <int>> New_graph::all_hamiltonian()
+{
+
+}

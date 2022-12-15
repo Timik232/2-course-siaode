@@ -24,6 +24,15 @@ int main()
         cout << "Graph haven't hamiltonian cycle\n";
         exit(0);
     }
-
+    vector<vector <int>> hamilts = gr->all_hamiltonian();
+    cout << "All hamiltonian graphs:\n";
+    
+    for (int i = 0; i < hamilts.size(); i++)
+    {
+        cout << 0 << "->" << hamilts[i][0];
+        for (int j = 0; j < hamilts[i].size(); j++)
+            cout << "->" << hamilts[i][j];
+    }
+    cout << endl;
 }
 
