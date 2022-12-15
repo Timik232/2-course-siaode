@@ -26,12 +26,13 @@ int main()
     }
     vector<vector <int>> hamilts = gr->all_hamiltonian();
     cout << "All hamiltonian graphs:\n";
-    
+    cout << hamilts.size();
     for (int i = 0; i < hamilts.size(); i++)
     {
         cout << 0 << "->" << hamilts[i][0];
-        for (int j = 0; j < hamilts[i].size(); j++)
+        for (int j = 1; j < hamilts[i].size(); j++)
             cout << "->" << hamilts[i][j];
+        cout << endl;
     }
     cout << endl;
 }

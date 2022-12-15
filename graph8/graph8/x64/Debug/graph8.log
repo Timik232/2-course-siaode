@@ -1,4 +1,5 @@
 ﻿  graph8.cpp
 C:\Users\Тимур\source\repos\graph8\graph8\newgraph.cpp(47,21): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
 C:\Users\Тимур\source\repos\graph8\graph8\newgraph.cpp(53,35): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Тимур\source\repos\graph8\graph8\newgraph.cpp(96): warning C4715: New_graph::find_Hamcycle: значение возвращается не при всех путях выполнения
   graph8.vcxproj -> C:\Users\Тимур\source\repos\graph8\x64\Debug\graph8.exe
